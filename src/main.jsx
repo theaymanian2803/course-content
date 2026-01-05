@@ -8,6 +8,7 @@ import App from './App.jsx'
 import Setup from './screens/Setup'
 import Youtube from './screens/Youtube'
 import Docs from './screens/Docs'
+import GitSetup from '@/components/setup/GitSetup.jsx'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/docs',
         element: <Docs />,
+      },
+      {
+        path: '/git',
+        element: <GitSetup />,
       },
     ],
   },

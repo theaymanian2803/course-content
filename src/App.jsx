@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="bg-black ">
       <Navbar />
-      <div className="flex gap-5 justify-start">
+      <div className="md:flex justify-center items-center md:items-start gap-5 md:justify-start w-full">
         <FilterNav />
         <Outlet />
       </div>
