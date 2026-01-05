@@ -1,4 +1,34 @@
-# Logs
+# --- System / OS Files ---
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- Tooling & Editors ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.env
+.env*.local
+.parcel-cache
+.cache
+.turbo
+
+# --- Dependency Directories ---
+node_modules/
+jspm_packages/
+
+# --- Build & Output ---
+dist/
+dist-ssr/
+build/
+out/
+*.tsbuildinfo
+
+# --- Logs ---
 logs
 *.log
 npm-debug.log*
@@ -7,18 +37,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# --- Testing ---
+coverage/
+.nyc_output
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# --- Documentation / Misc ---
+.vercel
+.netlify
