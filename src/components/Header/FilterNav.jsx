@@ -6,9 +6,10 @@ const GITHUB_REPO_URL = 'https://github.com/theaymanian2803/react-shadcn-tailwin
 
 const NAV_LINKS = [
   { name: 'shadcn setup', path: '/setup' },
-  { name: 'GitHub', path: '/github' },
-  { name: 'Docs', path: '/docs' },
+  { name: 'docs', path: '/docs' },
   { name: 'git/github', path: '/git' },
+  { name: 'reset git ', path: '/git/reset' },
+  { name: 'github hosting ', path: '/git/hosting' },
 ]
 
 export default function FilterNav() {
