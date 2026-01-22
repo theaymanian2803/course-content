@@ -82,6 +82,51 @@ const App = () => (
       <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
+  or if using this Setup
+  const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <App />,
+      children: [
+        {
+          path: '/setup',
+          element: <ChadcnScreen />,
+        },
+        {
+          path: '/docs',
+          element: <DocsScreen />,
+        },
+        {
+          path: '/git',
+          element: <GithubScreen />,
+        },
+        {
+          path: '/git/reset',
+          element: <GitResetScreen />,
+        },
+        {
+          path: '/git/hosting',
+          element: <GithibHostingScreen />,
+        },
+        {
+          path: '/prisma',
+          element: <PrismaScreen />,
+        },
+      ],
+    },
+  ],
+  {
+    // --- ADDED BASENAME HERE ---
+    basename: "/websitephones", 
+  }
+)
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
+)
 );`,
   },
   {
