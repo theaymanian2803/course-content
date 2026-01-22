@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import shadcn from './../data/shadcn.js'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { clsx } from 'clsx'
@@ -9,7 +8,6 @@ import {
   Copy,
   Check,
   Info,
-  Layers,
   Code2,
   Zap,
   Rocket,
@@ -17,7 +15,83 @@ import {
   ExternalLink,
   Github,
 } from 'lucide-react'
+
 const GITHUB_REPO_URL = 'https://github.com/theaymanian2803/react-shadcn-tailwindcss-setup'
+
+// --- MISSING DATA: ADDED HERE ---
+const shadcn = [
+  {
+    id: 'step-1',
+    step: '01',
+    name: 'Project Initialization',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      'Start by creating a new Vite project using the React template. We also install the core dependencies for Tailwind CSS and the Lucide icon library.',
+    code: `npm create vite@latest my-app -- --template react
+cd my-app
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p`,
+  },
+  {
+    id: 'step-2',
+    step: '02',
+    name: 'Path Configuration',
+    filename: 'vite.config.js',
+    language: 'javascript',
+    description:
+      'Shadcn UI requires path aliases to work correctly. Update your vite config to resolve "@" to your source directory.',
+    code: `import path from "path"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})`,
+  },
+  {
+    id: 'step-3',
+    step: '03',
+    name: 'The CLI Init',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      'Run the Shadcn initialization command. This wizard will ask you questions about your style preferences and automatically configure your components.json.',
+    code: `npx shadcn@latest init`,
+  },
+  {
+    id: 'step-4',
+    step: '04',
+    name: 'Structure Check',
+    filename: 'jsconfig.json',
+    language: 'json',
+    description:
+      'Ensure your compiler options are set up to understand the path aliases. This file helps your IDE provide intelligent autocompletion.',
+    code: `{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}`,
+  },
+  {
+    id: 'step-5',
+    step: '05',
+    name: 'Add Components',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      "You are now ready to add components. Shadcn uses a copy-paste architecture via CLI. Let's add a Button to test the setup.",
+    code: `npx shadcn@latest add button`,
+  },
+]
 
 // Shadcn utility for merging tailwind classes
 function cn(...inputs) {
@@ -121,8 +195,6 @@ const StepCard = ({ item }) => {
 export default function ShadcnDeploymentGuide() {
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-orange-600 selection:text-white">
-      {/* Nav */}
-
       {/* Hero */}
       <div className="max-w-6xl mx-auto px-6 py-24 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-600/10 border border-orange-500/20 text-orange-500 text-xs font-bold mb-8">

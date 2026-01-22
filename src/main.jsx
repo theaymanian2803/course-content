@@ -10,6 +10,7 @@ import DocsScreen from './screens/DocsScreen'
 import GithubScreen from '@/screens/GithubScreen'
 import GitResetScreen from '@/screens/GitResetScreen'
 import GithibHostingScreen from '@/screens/GithibHostingScreen'
+import PrismaScreen from '@/screens/PrismaScreen'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,14 @@ const router = createBrowserRouter([
       {
         path: '/git/hosting',
         element: <GithibHostingScreen />,
+      },
+      {
+        path: '/prisma',
+        element: <PrismaScreen />,
+      },
+      {
+        // --- ADDED BASENAME HERE ---
+        basename: '/course-content',
       },
     ],
   },
