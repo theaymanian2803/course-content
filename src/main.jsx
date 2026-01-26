@@ -11,44 +11,39 @@ import GithubScreen from '@/screens/GithubScreen'
 import GitResetScreen from '@/screens/GitResetScreen'
 import GithibHostingScreen from '@/screens/GithibHostingScreen'
 import PrismaScreen from '@/screens/PrismaScreen'
+import ErrorScreen from './screens/ErrorScreen'
+import Components from './screens/Components'
+import Sections from './screens/Sections'
+import ProductShowcase from '@/components/sections/ProductSectionOne'
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <App />,
+      errorElement: <ErrorScreen />,
+      children: [
+        { path: 'setup', element: <ChadcnScreen /> },
+        { path: 'libraries', element: <DocsScreen /> },
+        { path: 'git', element: <GithubScreen /> },
+        { path: 'git/reset', element: <GitResetScreen /> },
+        { path: 'git/hosting', element: <GithibHostingScreen /> },
+        { path: 'prisma', element: <PrismaScreen /> },
+        { path: 'components', element: <Components /> },
+
+        {
+          path: '/sections',
+          element: <Sections />,
+          children: [{ path: '/sections/sectionone', element: <ProductShowcase /> }],
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <App />,
-    children: [
-      {
-        path: '/setup',
-        element: <ChadcnScreen />,
-      },
-      {
-        path: '/docs',
-        element: <DocsScreen />,
-      },
-      {
-        path: '/git',
-        element: <GithubScreen />,
-      },
-      {
-        path: '/git/reset',
-        element: <GitResetScreen />,
-      },
-      {
-        path: '/git/hosting',
-        element: <GithibHostingScreen />,
-      },
-      {
-        path: '/prisma',
-        element: <PrismaScreen />,
-      },
-      {
-        // --- ADDED BASENAME HERE ---
-        basename: '/course-content',
-      },
-    ],
-  },
-])
-
+    // CORRECT PLACEMENT: As the second argument to createBrowserRouter
+    basename: '/course-content',
+  }
+)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RouterProvider router={router} />

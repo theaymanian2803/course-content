@@ -22,11 +22,12 @@ function cn(...inputs) {
 
 const NAV_LINKS = [
   { name: 'Shadcn Setup', path: '/setup', icon: LayoutTemplate },
-  { name: 'Documentation', path: '/docs', icon: BookOpen },
+  { name: 'libraries', path: '/libraries', icon: BookOpen },
   { name: 'Git Workflow', path: '/git', icon: GitBranch },
   { name: 'Reset Git', path: '/git/reset', icon: RefreshCw },
   { name: 'Github Hosting', path: '/git/hosting', icon: Cloud },
   { name: 'Prisma DB', path: '/prisma', icon: Database },
+  { name: 'Components', path: '/components', icon: Database },
 ]
 
 export default function FilterNav() {

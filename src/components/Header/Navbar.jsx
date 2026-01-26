@@ -9,7 +9,7 @@ function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
 
-const GITHUB_REPO_URL = 'https://github.com/YOUR_USERNAME/YOUR_REPO_NAME'
+const GITHUB_REPO_URL = 'https://github.com/repos?q=owner%3A%40me'
 
 // Navigation Items
 const NAV_ITEMS = [
@@ -84,7 +84,7 @@ export default function Navbar() {
               className="hidden md:flex group relative items-center gap-2 px-5 py-2.5 bg-white text-black rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-orange-500 hover:text-white transition-all overflow-hidden">
               <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]" />
               <Github size={16} />
-              <span>Clone Repo</span>
+              <span>get Repos</span>
               <ChevronRight
                 size={14}
                 className="opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all"
