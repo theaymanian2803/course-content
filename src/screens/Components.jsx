@@ -6,28 +6,33 @@ function Components() {
   return (
     <div className="flex flex-wrap gap-8 p-8">
       {/* ---------------------------------------------------------------------------
-          CARD 1: Live Preview of ProductShowcase
-          
-          How it works:
-          1. The Card is 400px wide.
-          2. The Inner Div is 1280px wide (Standard Desktop).
-          3. We scale the Inner Div by 0.3125 (400 / 1280 = 0.3125) to fit perfectly.
-          4. 'pointer-events-none' ensures clicking the card activates the Link, 
-             not the buttons inside the preview.
+          CARD 1: FIXED (Overlay Pattern)
       --------------------------------------------------------------------------- */}
-      <Link
-        to="/sections/sectionone"
-        className="group relative block w-[400px] h-[300px] rounded-2xl border border-white/10 bg-black overflow-hidden hover:border-orange-500/50 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500">
-        {/* THE SCALED PREVIEW CONTAINER */}
+      <div className="group relative block w-[400px] h-[300px] rounded-2xl border border-white/10 bg-black overflow-hidden hover:border-orange-500/50 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500">
+        {/* 1. PREVIEW CONTAINER 
+            (pointer-events-none ensures we don't interact with inner links) 
+        */}
         <div className="absolute top-0 left-0 w-[1280px] origin-top-left scale-[0.3125] pointer-events-none select-none bg-black h-screen">
           <ProductShowcase />
         </div>
 
-        {/* Overlay Gradient (Better Text Readability) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500 z-20" />
+        {/* 2. OVERLAY GRADIENT */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500 z-10" />
 
-        {/* Card Label */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 z-30 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+        {/* 3. THE FIX: CLICKABLE OVERLAY LINK 
+            This sits on top (z-20) and handles the navigation. 
+            It is a SIBLING to ProductShowcase, not a parent.
+        */}
+        <Link
+          to="/sections/sectionone"
+          className="absolute inset-0 z-20"
+          aria-label="View Product Showcase"
+        />
+
+        {/* 4. CARD LABEL 
+            (pointer-events-none ensures clicks pass through to the Link layer) 
+        */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 z-30 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
           <span className="text-orange-500 text-xs font-bold tracking-[0.2em] uppercase mb-2 block">
             Hero Component
           </span>
@@ -35,7 +40,7 @@ function Components() {
             Product Showcase
           </h3>
         </div>
-      </Link>
+      </div>
 
       {/* ---------------------------------------------------------------------------
           CARD 2: Placeholder

@@ -28,6 +28,7 @@ const NAV_LINKS = [
   { name: 'Github Hosting', path: '/git/hosting', icon: Cloud },
   { name: 'Prisma DB', path: '/prisma', icon: Database },
   { name: 'Components', path: '/components', icon: Database },
+  { name: 'landingPages', path: '/fullpages', icon: Database },
 ]
 
 export default function FilterNav() {

@@ -15,6 +15,10 @@ import ErrorScreen from './screens/ErrorScreen'
 import Components from './screens/Components'
 import Sections from './screens/Sections'
 import ProductShowcase from '@/components/sections/ProductSectionOne'
+import PagesComp from '@/screens/PageComp'
+import LandingPages from '@/screens/LandingPages'
+import PgOne from '@/components/landingPage/PageOne'
+import PgTwo from '@/components/landingPage/PageTwo'
 
 const router = createBrowserRouter(
   [
@@ -30,11 +34,20 @@ const router = createBrowserRouter(
         { path: 'git/hosting', element: <GithibHostingScreen /> },
         { path: 'prisma', element: <PrismaScreen /> },
         { path: 'components', element: <Components /> },
+        { path: 'fullpages', element: <PagesComp /> },
 
         {
           path: '/sections',
           element: <Sections />,
           children: [{ path: '/sections/sectionone', element: <ProductShowcase /> }],
+        },
+        {
+          path: '/sectionpages',
+          element: <LandingPages />,
+          children: [
+            { path: '/sectionpages/pageone', element: <PgOne /> },
+            { path: '/sectionpages/pagetwo', element: <PgTwo /> },
+          ],
         },
       ],
     },
