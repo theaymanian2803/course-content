@@ -44,7 +44,7 @@ export default function Navbar() {
               <span className="font-bold tracking-tight text-lg leading-none text-white flex items-center gap-2">
                 unccode
                 <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-white/5 text-gray-400 border border-white/5">
-                  v2.0
+                  v1.0
                 </span>
               </span>
               <span className="text-[10px] text-gray-500 font-medium tracking-widest mt-1 group-hover:text-orange-500 transition-colors">
