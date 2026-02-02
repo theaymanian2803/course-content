@@ -1,0 +1,5 @@
+take this component and give me the same one but with a different design and make it about phones and gadgets
+
+and return the full code with the preview exactly as i pasted to you 
+
+do the samthing but this time for a {} and add a slide just like in the first component i gave you and return the full code

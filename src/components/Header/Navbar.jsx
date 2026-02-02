@@ -15,7 +15,7 @@ const GITHUB_REPO_URL = 'https://github.com/repos?q=owner%3A%40me'
 const NAV_ITEMS = [
   { name: 'Guide', path: '/', icon: Layers },
   { name: 'Components', path: '/components', icon: Cpu },
-  { name: 'CLI', path: '/cli', icon: Terminal },
+  { name: 'CLI', path: '/', icon: Terminal },
 ]
 
 export default function Navbar() {

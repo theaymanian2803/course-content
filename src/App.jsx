@@ -3,7 +3,7 @@ import './App.css'
 import { Outlet } from 'react-router-dom'
 import Navbar from './components/Header/Navbar'
 import FilterNav from './components/header/FilterNav'
-import { PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from 'lucide-react'
+import { PanelLeftClose, PanelLeftOpen, SlidersHorizontal, Sparkles } from 'lucide-react'
 
 function App() {
   // State to manage sidebar visibility
@@ -71,9 +71,13 @@ function App() {
           </aside>
 
           {/* Content Area (Outlet) */}
-          <section className="flex-1 w-full min-w-0 bg-[#0f0b0a] rounded-2xl border border-white/5 overflow-hidden shadow-2xl relative">
+          <section className="flex-1 w-full min-w-0  border-white/5 overflow-hidden shadow-2xl relative">
             {/* Optional: Decorative gradient at top of content */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500/0 via-orange-500/50 to-orange-500/0 opacity-50"></div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-medium uppercase tracking-wider">
+              <Sparkles size={12} />
+              <span>Welcome Aboard</span>
+            </div>
+            <div className="absolute bottom-0 left-0 w-full p-3 h-1 bg-linear-to-r from-orange-500/0 via-orange-500/50 to-orange-500/0 opacity-50"></div>
 
             <Outlet />
           </section>

@@ -15,10 +15,16 @@ import ErrorScreen from './screens/ErrorScreen'
 import Components from './screens/Components'
 import Sections from './screens/Sections'
 import ProductShowcase from '@/components/sections/ProductSectionOne'
+import ProdTwo from '@/components/sections/ProdTwo'
+import ProductThree from '@/components/sections/ProductThree'
+import ProductFour from '@/components/sections/ProductFour'
+//pages for landingpages
 import PagesComp from '@/screens/PageComp'
 import LandingPages from '@/screens/LandingPages'
 import PgOne from '@/components/landingPage/PageOne'
 import PgTwo from '@/components/landingPage/PageTwo'
+//pages for landingpages
+//frontbuild starts here
 
 const router = createBrowserRouter(
   [
@@ -35,11 +41,17 @@ const router = createBrowserRouter(
         { path: 'prisma', element: <PrismaScreen /> },
         { path: 'components', element: <Components /> },
         { path: 'fullpages', element: <PagesComp /> },
+        { path: 'frontend', element: <frontComp /> },
 
         {
           path: '/sections',
           element: <Sections />,
-          children: [{ path: '/sections/sectionone', element: <ProductShowcase /> }],
+          children: [
+            { path: '/sections/sectionone', element: <ProductShowcase /> },
+            { path: '/sections/sectiontwo', element: <ProdTwo /> },
+            { path: '/sections/sectionthree', element: <ProductThree /> },
+            { path: '/sections/sectionfour', element: <ProductFour /> },
+          ],
         },
         {
           path: '/sectionpages',

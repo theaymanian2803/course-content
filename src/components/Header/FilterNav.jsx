@@ -10,7 +10,10 @@ import {
   Cloud,
   LayoutTemplate,
   ChevronRight,
+  Component,
   Hexagon,
+  BookOpenCheck,
+  FileBraces,
 } from 'lucide-react'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
@@ -27,8 +30,9 @@ const NAV_LINKS = [
   { name: 'Reset Git', path: '/git/reset', icon: RefreshCw },
   { name: 'Github Hosting', path: '/git/hosting', icon: Cloud },
   { name: 'Prisma DB', path: '/prisma', icon: Database },
-  { name: 'Components', path: '/components', icon: Database },
-  { name: 'landingPages', path: '/fullpages', icon: Database },
+  { name: 'Components', path: '/components', icon: Component },
+  { name: 'landingPages', path: '/fullpages', icon: BookOpenCheck },
+  { name: 'full frontend builds', path: '/frontend', icon: FileBraces },
 ]
 
 export default function FilterNav() {
