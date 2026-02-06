@@ -33,6 +33,7 @@ const NAV_LINKS = [
   { name: 'Components', path: '/components', icon: Component },
   { name: 'landingPages', path: '/fullpages', icon: BookOpenCheck },
   { name: 'full frontend builds', path: '/frontend', icon: FileBraces },
+  { name: 'python tutorials', path: '/py', icon: FileBraces },
 ]
 
 export default function FilterNav() {
