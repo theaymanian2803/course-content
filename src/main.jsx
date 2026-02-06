@@ -24,6 +24,8 @@ import LandingPages from '@/screens/LandingPages'
 import PgOne from '@/components/landingPage/PageOne'
 import PgTwo from '@/components/landingPage/PageTwo'
 //pages for landingpages
+import PyCourse from '@/screens/PyCourse'
+
 //frontbuild starts here
 
 const router = createBrowserRouter(
@@ -42,6 +44,7 @@ const router = createBrowserRouter(
         { path: 'components', element: <Components /> },
         { path: 'fullpages', element: <PagesComp /> },
         { path: 'frontend', element: <frontComp /> },
+        { path: 'py', element: <PyCourse /> },
 
         {
           path: '/sections',
