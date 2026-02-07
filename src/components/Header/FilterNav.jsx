@@ -30,6 +30,7 @@ const NAV_LINKS = [
   { name: 'Reset Git', path: '/git/reset', icon: RefreshCw },
   { name: 'Github Hosting', path: '/git/hosting', icon: Cloud },
   { name: 'Prisma DB', path: '/prisma', icon: Database },
+  { name: 'prisma auth', path: '/prismaauth', icon: FileBraces },
   { name: 'Components', path: '/components', icon: Component },
   { name: 'landingPages', path: '/fullpages', icon: BookOpenCheck },
   { name: 'full frontend builds', path: '/frontend', icon: FileBraces },

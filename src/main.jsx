@@ -25,6 +25,7 @@ import PgOne from '@/components/landingPage/PageOne'
 import PgTwo from '@/components/landingPage/PageTwo'
 //pages for landingpages
 import PyCourse from '@/screens/PyCourse'
+import PrismaAuthDocs from '@/screens/PrismaAuthDocs'
 
 //frontbuild starts here
 
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
         { path: 'fullpages', element: <PagesComp /> },
         { path: 'frontend', element: <frontComp /> },
         { path: 'py', element: <PyCourse /> },
+        { path: 'prismaauth', element: <PrismaAuthDocs /> },
 
         {
           path: '/sections',
