@@ -35,6 +35,8 @@ const NAV_LINKS = [
   { name: 'landingPages', path: '/fullpages', icon: BookOpenCheck },
   { name: 'full frontend builds', path: '/frontend', icon: FileBraces },
   { name: 'python tutorials', path: '/py', icon: FileBraces },
+  { name: 'supabase', path: '/supa', icon: FileBraces },
+  // { name: 'supabase', path: '/supabase', icon: FileBraces },
 ]
 
 export default function FilterNav() {

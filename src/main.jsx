@@ -28,6 +28,9 @@ import PyCourse from '@/screens/PyCourse'
 import PrismaAuthDocs from '@/screens/PrismaAuthDocs'
 
 //frontbuild starts here
+//supabase statrts here
+import SupabaseGuide from '@/screens/SupabaseGuide'
+import SupabasMigration from '@/screens/SupabaseSetup'
 
 const router = createBrowserRouter(
   [
@@ -47,6 +50,8 @@ const router = createBrowserRouter(
         { path: 'frontend', element: <frontComp /> },
         { path: 'py', element: <PyCourse /> },
         { path: 'prismaauth', element: <PrismaAuthDocs /> },
+        { path: 'supabase', element: <SupabaseGuide /> },
+        { path: 'supa', element: <SupabasMigration /> },
 
         {
           path: '/sections',
