@@ -5,32 +5,38 @@ import './index.css'
 
 // Import your main landing page
 import App from './App.jsx'
-import ChadcnScreen from './screens/ChadcnScreen'
-import DocsScreen from './screens/DocsScreen'
-import GithubScreen from '@/screens/GithubScreen'
-import GitResetScreen from '@/screens/GitResetScreen'
-import GithibHostingScreen from '@/screens/GithibHostingScreen'
-import PrismaScreen from '@/screens/PrismaScreen'
-import ErrorScreen from './screens/ErrorScreen'
-import Components from './screens/Components'
-import Sections from './screens/Sections'
-import ProductShowcase from '@/components/sections/ProductSectionOne'
-import ProdTwo from '@/components/sections/ProdTwo'
-import ProductThree from '@/components/sections/ProductThree'
-import ProductFour from '@/components/sections/ProductFour'
-//pages for landingpages
-import PagesComp from '@/screens/PageComp'
-import LandingPages from '@/screens/LandingPages'
-import PgOne from '@/components/landingPage/PageOne'
-import PgTwo from '@/components/landingPage/PageTwo'
-//pages for landingpages
-import PyCourse from '@/screens/PyCourse'
-import PrismaAuthDocs from '@/screens/PrismaAuthDocs'
+import ChadcnScreen from './screens/ChadcnScreen.jsx'
+import DocsScreen from './screens/DocsScreen.jsx'
+import GithubScreen from '@/screens/GithubScreen.jsx'
+import GitResetScreen from '@/screens/GitResetScreen.jsx'
+import GithibHostingScreen from '@/screens/GithibHostingScreen.jsx'
+import PrismaScreen from '@/screens/PrismaScreen.jsx'
+import ErrorScreen from './screens/ErrorScreen.jsx'
+import Components from './screens/Components.jsx'
+import Sections from './screens/Sections.jsx'
 
-//frontbuild starts here
-//supabase statrts here
-import SupabaseGuide from '@/screens/SupabaseGuide'
-import SupabasMigration from '@/screens/SupabaseSetup'
+// SECTIONS
+import ProductShowcase from '@/components/sections/ProductSectionOne.jsx'
+import ProdTwo from '@/components/sections/ProdTwo.jsx'
+import ProductThree from '@/components/sections/ProductThree.jsx'
+import ProductFour from '@/components/sections/ProductFour.jsx'
+
+// PAGES
+import PagesComp from '@/screens/PageComp.jsx'
+import LandingPages from '@/screens/LandingPages.jsx'
+import PgOne from '@/components/landingPage/PageOne.jsx'
+import PgTwo from '@/components/landingPage/PageTwo.jsx'
+
+// COURSE SCREENS
+import PyCourse from '@/screens/PyCourse.jsx'
+import PrismaAuthDocs from '@/screens/PrismaAuthDocs.jsx'
+
+// ⚠️ I commented this out because this file likely doesn't exist yet
+// import FrontComp from '@/screens/FrontComp.jsx'
+
+// SUPABASE
+import SupabaseGuide from '@/screens/SupabaseGuide.jsx'
+import SupabasMigration from '@/screens/SupabaseSetup.jsx'
 
 const router = createBrowserRouter(
   [
@@ -47,7 +53,11 @@ const router = createBrowserRouter(
         { path: 'prisma', element: <PrismaScreen /> },
         { path: 'components', element: <Components /> },
         { path: 'fullpages', element: <PagesComp /> },
-        { path: 'frontend', element: <frontComp /> },
+
+        // ⚠️ I commented this route out to stop the crash.
+        // Uncomment it only when you have created the 'FrontComp.jsx' file.
+        // { path: 'frontend', element: <FrontComp /> },
+
         { path: 'py', element: <PyCourse /> },
         { path: 'prismaauth', element: <PrismaAuthDocs /> },
         { path: 'supabase', element: <SupabaseGuide /> },
@@ -75,10 +85,10 @@ const router = createBrowserRouter(
     },
   ],
   {
-    // CORRECT PLACEMENT: As the second argument to createBrowserRouter
-    basename: '/course-content',
+    basename: '/course-content', // Only keep this if your site is at unccode.org/course-content
   }
 )
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RouterProvider router={router} />
