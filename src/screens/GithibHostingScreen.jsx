@@ -1,10 +1,10 @@
 import React from 'react'
-import HostingGuide from '@/components/setup/GithubHosting'
+import GithubHosting from '@/components/setup/GithubHosting'
 
 function GithibHostingScreen() {
   return (
     <div>
-      <HostingGuide />
+      <GithubHosting />
     </div>
   )
 }

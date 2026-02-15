@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import './App.css'
 import { Outlet } from 'react-router-dom'
-import Navbar from './components/Header/Navbar'
-import FilterNav from './components/Header/FilterNav'
+import NavBar from './components/header/NavBar'
+import FilterNav from './components/header/FilterNav'
 import { PanelLeftClose, PanelLeftOpen, SlidersHorizontal, Sparkles } from 'lucide-react'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div className="min-h-screen w-full bg-black/90 text-white selection:bg-orange-500/30 font-body">
-      <Navbar />
+      <NavBar />
 
       <main className="w-full pt-28 pb-12">
         {/* Header Section */}
