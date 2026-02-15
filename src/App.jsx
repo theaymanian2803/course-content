@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import { Outlet } from 'react-router-dom'
 import Navbar from './components/Header/Navbar'
-import FilterNav from './components/header/FilterNav'
+import FilterNav from './components/Header/FilterNav'
 import { PanelLeftClose, PanelLeftOpen, SlidersHorizontal, Sparkles } from 'lucide-react'
 
 function App() {
