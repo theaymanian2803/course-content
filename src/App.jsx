@@ -57,7 +57,7 @@ function App() {
           {/* We use width/opacity transitions to create a slide effect */}
           <aside
             className={`
-              flex-shrink-0 sticky top-32 z-40 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
+          shrink-0 sticky top-32 z-40 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
               ${
                 isSidebarOpen
                   ? 'w-full md:w-72 opacity-100 mr-8' // Open State
