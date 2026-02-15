@@ -5,8 +5,6 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // CHANGED: This must match your folder name "courses" on Hostinger
-  base: '/courses/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

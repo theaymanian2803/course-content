@@ -38,56 +38,51 @@ import PrismaAuthDocs from '@/screens/PrismaAuthDocs.jsx'
 import SupabaseGuide from '@/screens/SupabaseGuide.jsx'
 import SupabaseSetup from '@/screens/SupabaseSetup.jsx'
 
-const router = createBrowserRouter(
-  [
-    {
-      path: '/',
-      element: <App />,
-      errorElement: <ErrorScreen />,
-      children: [
-        { path: 'setup', element: <ChadcnScreen /> },
-        { path: 'libraries', element: <DocsScreen /> },
-        { path: 'git', element: <GithubScreen /> },
-        { path: 'git/reset', element: <GitResetScreen /> },
-        { path: 'git/hosting', element: <GithibHostingScreen /> },
-        { path: 'prisma', element: <PrismaScreen /> },
-        { path: 'components', element: <Components /> },
-        { path: 'fullpages', element: <PagesComp /> },
-
-        // ⚠️ I commented this route out to stop the crash.
-        // Uncomment it only when you have created the 'FrontComp.jsx' file.
-        // { path: 'frontend', element: <FrontComp /> },
-
-        { path: 'py', element: <PyCourse /> },
-        { path: 'prismaauth', element: <PrismaAuthDocs /> },
-        { path: 'supabase', element: <SupabaseGuide /> },
-        { path: 'supa', element: <SupabaseSetup /> },
-
-        {
-          path: '/sections',
-          element: <Sections />,
-          children: [
-            { path: '/sections/sectionone', element: <ProductSectionOne /> },
-            { path: '/sections/sectiontwo', element: <ProdTwo /> },
-            { path: '/sections/sectionthree', element: <ProductThree /> },
-            { path: '/sections/sectionfour', element: <ProductFour /> },
-          ],
-        },
-        {
-          path: '/sectionpages',
-          element: <LandingPages />,
-          children: [
-            { path: '/sectionpages/pageone', element: <PageOne /> },
-            { path: '/sectionpages/pagetwo', element: <PageTwo /> },
-          ],
-        },
-      ],
-    },
-  ],
+const router = createBrowserRouter([
   {
-    basename="/courses", // Only keep this if your site is at unccode.org/course-content
-  }
-)
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorScreen />,
+    children: [
+      { path: 'setup', element: <ChadcnScreen /> },
+      { path: 'libraries', element: <DocsScreen /> },
+      { path: 'git', element: <GithubScreen /> },
+      { path: 'git/reset', element: <GitResetScreen /> },
+      { path: 'git/hosting', element: <GithibHostingScreen /> },
+      { path: 'prisma', element: <PrismaScreen /> },
+      { path: 'components', element: <Components /> },
+      { path: 'fullpages', element: <PagesComp /> },
+
+      // ⚠️ I commented this route out to stop the crash.
+      // Uncomment it only when you have created the 'FrontComp.jsx' file.
+      // { path: 'frontend', element: <FrontComp /> },
+
+      { path: 'py', element: <PyCourse /> },
+      { path: 'prismaauth', element: <PrismaAuthDocs /> },
+      { path: 'supabase', element: <SupabaseGuide /> },
+      { path: 'supa', element: <SupabaseSetup /> },
+
+      {
+        path: '/sections',
+        element: <Sections />,
+        children: [
+          { path: '/sections/sectionone', element: <ProductSectionOne /> },
+          { path: '/sections/sectiontwo', element: <ProdTwo /> },
+          { path: '/sections/sectionthree', element: <ProductThree /> },
+          { path: '/sections/sectionfour', element: <ProductFour /> },
+        ],
+      },
+      {
+        path: '/sectionpages',
+        element: <LandingPages />,
+        children: [
+          { path: '/sectionpages/pageone', element: <PageOne /> },
+          { path: '/sectionpages/pagetwo', element: <PageTwo /> },
+        ],
+      },
+    ],
+  },
+])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
