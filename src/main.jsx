@@ -16,7 +16,7 @@ import Components from './screens/Components.jsx'
 import Sections from './screens/Sections.jsx'
 
 // SECTIONS
-import ProductShowcase from '@/components/sections/ProductSectionOne.jsx'
+import ProductSectionOne from '@/components/sections/ProductSectionOne.jsx'
 import ProdTwo from '@/components/sections/ProdTwo.jsx'
 import ProductThree from '@/components/sections/ProductThree.jsx'
 import ProductFour from '@/components/sections/ProductFour.jsx'
@@ -24,8 +24,8 @@ import ProductFour from '@/components/sections/ProductFour.jsx'
 // PAGES
 import PagesComp from '@/screens/PageComp.jsx'
 import LandingPages from '@/screens/LandingPages.jsx'
-import PgOne from '@/components/landingPage/PageOne.jsx'
-import PgTwo from '@/components/landingPage/PageTwo.jsx'
+import PageOne from '@/components/landingPage/PageOne.jsx'
+import PageTwo from '@/components/landingPage/PageTwo.jsx'
 
 // COURSE SCREENS
 import PyCourse from '@/screens/PyCourse.jsx'
@@ -36,7 +36,7 @@ import PrismaAuthDocs from '@/screens/PrismaAuthDocs.jsx'
 
 // SUPABASE
 import SupabaseGuide from '@/screens/SupabaseGuide.jsx'
-import SupabasMigration from '@/screens/SupabaseSetup.jsx'
+import SupabaseSetup from '@/screens/SupabaseSetup.jsx'
 
 const router = createBrowserRouter(
   [
@@ -61,13 +61,13 @@ const router = createBrowserRouter(
         { path: 'py', element: <PyCourse /> },
         { path: 'prismaauth', element: <PrismaAuthDocs /> },
         { path: 'supabase', element: <SupabaseGuide /> },
-        { path: 'supa', element: <SupabasMigration /> },
+        { path: 'supa', element: <SupabaseSetup /> },
 
         {
           path: '/sections',
           element: <Sections />,
           children: [
-            { path: '/sections/sectionone', element: <ProductShowcase /> },
+            { path: '/sections/sectionone', element: <ProductSectionOne /> },
             { path: '/sections/sectiontwo', element: <ProdTwo /> },
             { path: '/sections/sectionthree', element: <ProductThree /> },
             { path: '/sections/sectionfour', element: <ProductFour /> },
@@ -77,15 +77,15 @@ const router = createBrowserRouter(
           path: '/sectionpages',
           element: <LandingPages />,
           children: [
-            { path: '/sectionpages/pageone', element: <PgOne /> },
-            { path: '/sectionpages/pagetwo', element: <PgTwo /> },
+            { path: '/sectionpages/pageone', element: <PageOne /> },
+            { path: '/sectionpages/pagetwo', element: <PageTwo /> },
           ],
         },
       ],
     },
   ],
   {
-    basename: '/course-content', // Only keep this if your site is at unccode.org/course-content
+    basename="/courses", // Only keep this if your site is at unccode.org/course-content
   }
 )
 

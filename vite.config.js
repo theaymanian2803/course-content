@@ -5,17 +5,15 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/course-content/',
+  // CHANGED: This must match your folder name "courses" on Hostinger
+  base: '/courses/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
-    // This increases the warning limit from 500kb to 1500kb
     chunkSizeWarningLimit: 1500,
-
-    // Optional: Splitting vendor chunks helps with performance
     rollupOptions: {
       output: {
         manualChunks(id) {
