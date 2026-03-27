@@ -76,14 +76,46 @@ port = 54321`,
   {
     id: 'step-3',
     step: '03',
+    name: 'CLI Authentication',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      'Before linking your new project, you must clear out any old Lovable or cached sessions. Logging out and logging back in ensures you are authenticated under your own Supabase account.',
+    code: `npx supabase logout
+npx supabase login`,
+  },
+  {
+    id: 'step-4',
+    step: '04',
     name: 'Linking & Pushing',
     filename: 'terminal',
     language: 'bash',
     description:
-      'You must "handshake" your local folder with the remote project. "Link" establishes the connection; "db push" executes the SQL files in your migrations folder to build your tables.',
-    code: `npx supabase login
-npx supabase link --project-ref wershivozpwtfnypmmrd
+      'You must "handshake" your local folder with the remote project. "Link" establishes the connection; "db push" executes the SQL files in your migrations folder to build your tables on the live database.',
+    code: `npx supabase link --project-ref wershivozpwtfnypmmrd
 npx supabase db push`,
+  },
+  {
+    id: 'step-5',
+    step: '05',
+    name: 'Injecting Payment Secrets',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      'Your Supabase Edge Functions need secure access to your PayPal credentials to process payments. We use the secrets command to inject them directly into your Supabase cloud securely (never hardcode these!).',
+    code: `npx supabase secrets set PAYPAL_CLIENT_ID="your_paypal_client_id"
+npx supabase secrets set PAYPAL_SECRET="your_paypal_secret"`,
+  },
+  {
+    id: 'step-6',
+    step: '06',
+    name: 'Deploying Edge Functions',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      'Finally, push your local Edge Functions to the cloud. This deploys the PayPal logic to Supabase so your frontend can securely create and capture payment orders.',
+    code: `npx supabase functions deploy create-paypal-order
+npx supabase functions deploy capture-paypal-order`,
   },
 ]
 

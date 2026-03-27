@@ -3,8 +3,10 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 
-// Import your main landing page
+// Import your main landing page and your new Docs layout
 import App from './App.jsx'
+import Docs from './screens/Docs.jsx' // ⚠️ Make sure to create this file!
+
 import ChadcnScreen from './screens/ChadcnScreen.jsx'
 import DocsScreen from './screens/DocsScreen.jsx'
 import GithubScreen from '@/screens/GithubScreen.jsx'
@@ -39,28 +41,34 @@ import SupabaseGuide from '@/screens/SupabaseGuide.jsx'
 import SupabaseSetup from '@/screens/SupabaseSetup.jsx'
 
 const router = createBrowserRouter([
+  // 1. Standalone Landing Page
   {
     path: '/',
     element: <App />,
     errorElement: <ErrorScreen />,
+  },
+
+  // 2. Docs Layout (Wraps all the other routes)
+  {
+    element: <Docs />, // This acts as the parent layout
+    errorElement: <ErrorScreen />,
     children: [
-      { path: 'setup', element: <ChadcnScreen /> },
-      { path: 'libraries', element: <DocsScreen /> },
-      { path: 'git', element: <GithubScreen /> },
-      { path: 'git/reset', element: <GitResetScreen /> },
-      { path: 'git/hosting', element: <GithibHostingScreen /> },
-      { path: 'prisma', element: <PrismaScreen /> },
-      { path: 'components', element: <Components /> },
-      { path: 'fullpages', element: <PagesComp /> },
+      { path: '/setup', element: <ChadcnScreen /> },
+      { path: '/libraries', element: <DocsScreen /> },
+      { path: '/git', element: <GithubScreen /> },
+      { path: '/git/reset', element: <GitResetScreen /> },
+      { path: '/git/hosting', element: <GithibHostingScreen /> },
+      { path: '/prisma', element: <PrismaScreen /> },
+      { path: '/components', element: <Components /> },
+      { path: '/fullpages', element: <PagesComp /> },
 
-      // ⚠️ I commented this route out to stop the crash.
-      // Uncomment it only when you have created the 'FrontComp.jsx' file.
-      // { path: 'frontend', element: <FrontComp /> },
+      // ⚠️ Uncomment when FrontComp.jsx is created
+      // { path: '/frontend', element: <FrontComp /> },
 
-      { path: 'py', element: <PyCourse /> },
-      { path: 'prismaauth', element: <PrismaAuthDocs /> },
-      { path: 'supabase', element: <SupabaseGuide /> },
-      { path: 'supa', element: <SupabaseSetup /> },
+      { path: '/py', element: <PyCourse /> },
+      { path: '/prismaauth', element: <PrismaAuthDocs /> },
+      { path: '/supabase', element: <SupabaseGuide /> },
+      { path: '/supa', element: <SupabaseSetup /> },
 
       {
         path: '/sections',

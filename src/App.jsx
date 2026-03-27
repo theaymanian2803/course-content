@@ -1,90 +1,41 @@
-import React, { useState } from 'react'
-import './App.css'
-import { Outlet } from 'react-router-dom'
+import React from 'react'
 import NavBar from './components/header/NavBar'
-import FilterNav from './components/header/FilterNav'
-import { PanelLeftClose, PanelLeftOpen, SlidersHorizontal, Sparkles } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-function App() {
-  // State to manage sidebar visibility
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-
+export default function App() {
   return (
-    <div className="min-h-screen w-full bg-black/90 text-white selection:bg-orange-500/30 font-body">
+    <div className="min-h-screen w-full bg-[#020202] text-white selection:bg-orange-500/30 font-body">
       <NavBar />
 
-      <main className="w-full pt-28 pb-12">
-        {/* Header Section */}
-        <div className="w-full px-6 md:px-12 mb-8 border-b border-white/10 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl font-display uppercase">
-              Start{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">
-                Navigating
-              </span>
-            </h1>
-            <p className="text-stone-400 mt-2 text-sm">
-              Select your preferences to find the perfect setup.
-            </p>
+      <main className="w-full pt-32 pb-12 px-6 flex flex-col items-center justify-center text-center">
+        {/* Replace this placeholder with your actual Landing Page content */}
+        <div className="max-w-3xl mx-auto space-y-8 mt-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-stone-400 text-sm font-medium">
+            🚀 Version 2.0 is now live
           </div>
 
-          {/* Toggle Button Area */}
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className={`
-              group flex items-center gap-3 px-5 py-3 rounded-xl border transition-all duration-300
-              ${
-                isSidebarOpen
-                  ? 'bg-orange-500/10 border-orange-500/50 text-orange-400'
-                  : 'bg-white/5 border-white/10 text-stone-400 hover:bg-white/10 hover:text-white'
-              }
-            `}>
-            {isSidebarOpen ? (
-              <PanelLeftClose className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-            ) : (
-              <PanelLeftOpen className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            )}
-            <span className="font-bold text-sm tracking-wide uppercase">
-              {isSidebarOpen ? 'Hide Filters' : 'Show Filters'}
+          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">
+            Build The <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">
+              Impossible
             </span>
-            {!isSidebarOpen && <SlidersHorizontal className="w-4 h-4 ml-2 opacity-50" />}
-          </button>
-        </div>
+          </h1>
 
-        {/* Layout Container */}
-        <div className="flex flex-col md:flex-row gap-0 items-start w-full px-4 md:px-8 relative transition-all">
-          {/* Sidebar */}
-          {/* We use width/opacity transitions to create a slide effect */}
-          <aside
-            className={`
-          shrink-0 sticky top-32 z-40 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
-              ${
-                isSidebarOpen
-                  ? 'w-full md:w-72 opacity-100 mr-8' // Open State
-                  : 'w-0 opacity-0 mr-0' // Closed State
-              }
-            `}>
-            {/* Inner container prevents content squishing during animation */}
-            <div className="w-full md:w-72">
-              <FilterNav />
-            </div>
-          </aside>
+          <p className="text-xl text-stone-400 max-w-2xl mx-auto leading-relaxed">
+            Welcome to the new platform. This is your landing page. Build your features,
+            testimonials, and pricing right here.
+          </p>
 
-          {/* Content Area (Outlet) */}
-          <section className="flex-1 w-full min-w-0  border-white/5 overflow-hidden shadow-2xl relative">
-            {/* Optional: Decorative gradient at top of content */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-medium uppercase tracking-wider">
-              <Sparkles size={12} />
-              <span>Welcome Aboard</span>
-            </div>
-            <div className="absolute bottom-0 left-0 w-full p-3 h-1 bg-linear-to-r from-orange-500/0 via-orange-500/50 to-orange-500/0 opacity-50"></div>
-
-            <Outlet />
-          </section>
+          <div className="pt-8">
+            <Link
+              to="/setup"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold uppercase tracking-wider rounded-xl transition-all hover:scale-105">
+              Enter Documentation <ArrowRight size={20} />
+            </Link>
+          </div>
         </div>
       </main>
     </div>
   )
 }
-
-export default App
