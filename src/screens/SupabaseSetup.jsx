@@ -1,24 +1,22 @@
-import React, { useState } from 'react'
+import { clsx } from 'clsx'
+import {
+  AlertTriangle,
+  Box,
+  Check,
+  Cloud,
+  Copy,
+  Cpu,
+  FolderTree,
+  Info,
+  Layers,
+  Layout,
+  RefreshCw,
+  Settings,
+} from 'lucide-react'
+import { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import {
-  Copy,
-  Check,
-  Info,
-  Database,
-  Terminal,
-  FileCode,
-  Settings,
-  RefreshCw,
-  ArrowRightLeft,
-  Box,
-  Cpu,
-  Layers,
-  FolderTree,
-  AlertTriangle,
-} from 'lucide-react'
 
 // --- THE ANATOMY DATA (What is inside the code) ---
 const anatomyData = [
@@ -39,6 +37,12 @@ const anatomyData = [
     detail:
       'A hidden directory used for AI syncing. Once you move to VS Code, this folder is dead weight and can be deleted to fully decouple the project.',
     icon: <Layers className="text-purple-500" />,
+  },
+  {
+    title: 'Cloudflare R2 Bucket',
+    detail:
+      'Your S3-compatible image storage. Bypasses standard storage limits and provides a lightning-fast CDN via .r2.dev public links.',
+    icon: <Cloud className="text-cyan-500" />,
   },
 ]
 
@@ -119,6 +123,240 @@ npx supabase functions deploy capture-paypal-order`,
   },
 ]
 
+// --- NEW R2 STORAGE STEPS ---
+const r2Steps = [
+  {
+    id: 'r2-1',
+    step: '07',
+    name: 'Create R2 Edge Function',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      'We need a secure backend tunnel to talk to Cloudflare. First, generate the empty function folder in your local project.',
+    code: `npx supabase functions new r2-upload-url`,
+  },
+  {
+    id: 'r2-2',
+    step: '08',
+    name: 'The Edge Function Code',
+    filename: 'supabase/functions/r2-upload-url/index.ts',
+    language: 'typescript',
+    description:
+      'This Deno code uses the AWS S3 SDK to generate a secure presigned upload URL for Cloudflare R2. It completely bypasses the need for the frontend browser to hold your secret Cloudflare keys.',
+    code: `import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { S3Client, PutObjectCommand } from "npm:@aws-sdk/client-s3"
+import { getSignedUrl } from "npm:@aws-sdk/s3-request-presigner"
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) throw new Error('Unauthorized')
+
+    const { fileName, contentType } = await req.json()
+
+    const s3Client = new S3Client({
+      region: "auto",
+      endpoint: \`https://\${Deno.env.get("R2_ACCOUNT_ID")}.r2.cloudflarestorage.com\`,
+      credentials: {
+        accessKeyId: Deno.env.get("R2_ACCESS_KEY_ID")!,
+        secretAccessKey: Deno.env.get("R2_SECRET_ACCESS_KEY")!,
+      },
+      forcePathStyle: true,
+    })
+
+    const command = new PutObjectCommand({
+      Bucket: Deno.env.get("R2_BUCKET_NAME"),
+      Key: fileName,
+      ContentType: contentType,
+    })
+
+    const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 })
+    const publicUrl = \`\${Deno.env.get("R2_PUBLIC_DOMAIN")}/\${fileName}\`
+
+    return new Response(
+      JSON.stringify({ uploadUrl, publicUrl }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  } catch (error: any) {
+    return new Response(
+      JSON.stringify({ error: error.message }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  }
+})`,
+  },
+  {
+    id: 'r2-3',
+    step: '09',
+    name: 'R2 Secrets & Deployment',
+    filename: 'terminal',
+    language: 'bash',
+    description:
+      'Inject your Cloudflare R2 credentials into Supabase secrets and deploy the function. CRUCIAL: In the Supabase Dashboard, you must uncheck "Enforce JWT Verification" for this function so the CORS preflight request doesn\'t get blocked!',
+    code: `npx supabase secrets set R2_ACCOUNT_ID="your_account_id"
+npx supabase secrets set R2_BUCKET_NAME="templatewebsite"
+npx supabase secrets set R2_ACCESS_KEY_ID="your_access_key"
+npx supabase secrets set R2_SECRET_ACCESS_KEY="your_secret_key"
+npx supabase secrets set R2_PUBLIC_DOMAIN="https://pub-xxx.r2.dev"
+
+npx supabase functions deploy r2-upload-url`,
+  },
+  {
+    id: 'r2-4',
+    step: '10',
+    name: 'Cloudflare API & CORS',
+    filename: 'cloudflare-dashboard',
+    language: 'json',
+    description:
+      'Create an API token in Cloudflare R2 with "Object Read & Write" permissions. Then, go to your Bucket Settings -> CORS Policy and paste this exact JSON to whitelist your app. Without this, your browser will block the upload.',
+    code: `[
+  {
+    "AllowedOrigins": [
+      "http://localhost:8080",
+      "https://your-production-domain.com"
+    ],
+    "AllowedMethods": [
+      "GET",
+      "PUT",
+      "POST",
+      "DELETE",
+      "HEAD"
+    ],
+    "AllowedHeaders": [
+      "*"
+    ],
+    "ExposeHeaders": []
+  }
+]`,
+  },
+]
+
+// --- NEW FRONTEND INTEGRATION STEPS ---
+const frontendSteps = [
+  {
+    id: 'fe-1',
+    step: '11',
+    name: 'The React Uploader Component',
+    filename: 'src/components/admin/R2ImageUpload.tsx',
+    language: 'tsx',
+    description:
+      'This component handles the secure 3-step sequence: 1) Ask Supabase for a Cloudflare ticket, 2) Upload the file directly to Cloudflare, 3) Return the public image URL directly back to the form.',
+    code: `import { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Loader2, UploadCloud, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface R2ImageUploadProps {
+  value: string;
+  onChange: (url: string) => void;
+}
+
+export function R2ImageUpload({ value, onChange }: R2ImageUploadProps) {
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+
+      // Generate secure random filename
+      const fileExt = file.name.split('.').pop();
+      const fileName = \`\${Math.random().toString(36).substring(2, 15)}-\${Date.now()}.\${fileExt}\`;
+
+      // 1. Ask Edge Function for Upload Ticket
+      const { data, error } = await supabase.functions.invoke("r2-upload-url", {
+        body: { fileName, contentType: file.type },
+      });
+      if (error) throw new Error(error.message);
+
+      // 2. Upload straight to Cloudflare R2
+      const uploadResponse = await fetch(data.uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+      if (!uploadResponse.ok) throw new Error("Failed to upload to R2");
+
+      // 3. Update form with public URL
+      onChange(data.publicUrl);
+
+    } catch (error) {
+      console.error("Upload error:", error);
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
+      {value ? (
+        <div className="relative w-full h-48 rounded-xl overflow-hidden group border border-border/50">
+          <img src={value} alt="Preview" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+            <Button type="button" variant="secondary" size="sm" onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
+               {isUploading ? <Loader2 className="animate-spin w-4 h-4" /> : "Replace"}
+            </Button>
+            <Button type="button" variant="destructive" size="sm" onClick={() => onChange("")}>
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div onClick={() => !isUploading && fileInputRef.current?.click()} className="w-full h-48 border-2 border-dashed rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-muted/10 transition-colors">
+           {isUploading ? <Loader2 className="animate-spin text-primary w-8 h-8" /> : <UploadCloud className="w-8 h-8 mb-2 text-muted-foreground" />}
+        </div>
+      )}
+    </div>
+  );
+}`,
+  },
+  {
+    id: 'fe-2',
+    step: '12',
+    name: 'Form Integration',
+    filename: 'src/components/admin/TemplateForm.tsx',
+    language: 'tsx',
+    description:
+      'Finally, import your new component into the admin form. Simply replace the standard text `<Input />` with `<R2ImageUpload />`. Because it handles its own internal state and just passes back a string URL, it plugs seamlessly into your existing form.',
+    code: `// 1. Import the new R2 Image Uploader at the top
+import { R2ImageUpload } from './R2ImageUpload'
+
+// 2. Replace your standard text input with the new component:
+<div className="space-y-2 md:col-span-2">
+  <Label>Template Image *</Label>
+  <div className="max-w-md">
+    <R2ImageUpload
+      value={imageUrl}
+      onChange={(newUrl) => {
+        setImageUrl(newUrl)
+        // Clear validation errors automatically
+        if (errors.image_url) {
+          setErrors((prev) => ({ ...prev, image_url: '' }))
+        }
+      }}
+    />
+  </div>
+  {errors.image_url && (
+    <p className="text-sm text-destructive">{errors.image_url}</p>
+  )}
+</div>`,
+  },
+]
+
 function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
@@ -194,7 +432,7 @@ const StepCard = ({ item }) => {
                 </div>
                 <div>
                   <h4 className="text-white font-bold text-lg mb-3">The Logic</h4>
-                  <p className="text-gray-400 leading-relaxed text-base max-w-2xl">
+                  <p className="text-gray-400 leading-relaxed text-base max-w-2xl whitespace-pre-line">
                     {item.description}
                   </p>
                 </div>
@@ -228,7 +466,7 @@ export default function CompleteHandoverGuide() {
             "hard-coded" to Lovable's cloud database. To take control, you must swap the identity of
             the project in three specific locations: the Frontend, the CLI, and the Cloud.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {anatomyData.map((item, i) => (
               <div
                 key={i}
@@ -245,9 +483,34 @@ export default function CompleteHandoverGuide() {
       {/* 2. THE STEPS SECTION */}
       <section className="max-w-6xl mx-auto px-6 pb-32">
         <h2 className="text-3xl font-black uppercase italic mb-16 flex items-center gap-4">
-          <Settings className="text-orange-600" /> Execution Steps
+          <Settings className="text-orange-600" /> Core Environment Setup
         </h2>
+
         {transitionSteps.map((step) => (
+          <StepCard key={step.id} item={step} />
+        ))}
+
+        {/* --- NEW R2 STORAGE HEADER & STEPS --- */}
+        <div className="mt-24 mb-16">
+          <h2 className="text-3xl font-black uppercase italic flex items-center gap-4">
+            <Cloud className="text-cyan-500" /> Cloudflare R2 Backend Setup
+          </h2>
+          <div className="h-px w-full bg-white/10 mt-6"></div>
+        </div>
+
+        {r2Steps.map((step) => (
+          <StepCard key={step.id} item={step} />
+        ))}
+
+        {/* --- NEW FRONTEND HEADER & STEPS --- */}
+        <div className="mt-24 mb-16">
+          <h2 className="text-3xl font-black uppercase italic flex items-center gap-4">
+            <Layout className="text-purple-500" /> React Frontend Integration
+          </h2>
+          <div className="h-px w-full bg-white/10 mt-6"></div>
+        </div>
+
+        {frontendSteps.map((step) => (
           <StepCard key={step.id} item={step} />
         ))}
 
@@ -259,7 +522,7 @@ export default function CompleteHandoverGuide() {
             </h2>
             <p className="text-gray-400 mb-8 max-w-lg mx-auto">
               Once these files are saved, restart your server. You are no longer running an
-              AI-managed site; you are running a professional production build.
+              AI-managed site; you are running a professional, scalable production build.
             </p>
             <button className="px-10 py-4 bg-orange-600 text-white rounded-xl font-black uppercase text-sm hover:scale-105 transition-all flex items-center gap-2 mx-auto">
               <RefreshCw size={18} /> Rebuild Project
