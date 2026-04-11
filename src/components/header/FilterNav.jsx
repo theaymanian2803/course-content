@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import {
-  Menu,
-  X,
-  Database,
-  BookOpen,
-  GitBranch,
-  RefreshCw,
-  Cloud,
-  LayoutTemplate,
-  ChevronRight,
-  Component,
-  Hexagon,
-  BookOpenCheck,
-  FileBraces,
-} from 'lucide-react'
 import { clsx } from 'clsx'
+import {
+  BookOpen,
+  BookOpenCheck,
+  ChevronRight,
+  Cloud,
+  Component,
+  Database,
+  DatabaseZap,
+  FileBraces,
+  GitBranch,
+  Hexagon,
+  Languages,
+  LayoutTemplate,
+  Menu,
+  RefreshCw,
+  X,
+} from 'lucide-react'
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 
 // Utility for merging classes
@@ -34,8 +36,9 @@ const NAV_LINKS = [
   { name: 'Components', path: '/components', icon: Component },
   { name: 'landingPages', path: '/fullpages', icon: BookOpenCheck },
   { name: 'full frontend builds', path: '/frontend', icon: FileBraces },
-  { name: 'python tutorials', path: '/py', icon: FileBraces },
-  { name: 'supabase', path: '/supa', icon: FileBraces },
+  { name: 'python tutorials', path: '/py', icon: Languages },
+  { name: 'supabase', path: '/supa', icon: DatabaseZap },
+  { name: 'supabsegoogle', path: '/supabsegoogle', icon: DatabaseZap },
   // { name: 'supabase', path: '/supabase', icon: FileBraces },
 ]
 
